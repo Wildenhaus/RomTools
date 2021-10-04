@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RomTools.CoreLib", "RomTools.CoreLib\RomTools.CoreLib.csproj", "{4DE519A1-6A84-4018-B607-F66F46D97535}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{AE322012-B39E-4060-8E27-DC57CDD92707}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RomTools.Iso9960", "Plugins\RomTools.Iso9960\RomTools.Iso9960.csproj", "{52B48D63-3806-49C1-A5F7-501A7F660E10}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4DE519A1-6A84-4018-B607-F66F46D97535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DE519A1-6A84-4018-B607-F66F46D97535}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DE519A1-6A84-4018-B607-F66F46D97535}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DE519A1-6A84-4018-B607-F66F46D97535}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52B48D63-3806-49C1-A5F7-501A7F660E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52B48D63-3806-49C1-A5F7-501A7F660E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52B48D63-3806-49C1-A5F7-501A7F660E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52B48D63-3806-49C1-A5F7-501A7F660E10}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{52B48D63-3806-49C1-A5F7-501A7F660E10} = {AE322012-B39E-4060-8E27-DC57CDD92707}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {11BECBAF-6B02-48FC-9999-BAC7768C6C3F}
+	EndGlobalSection
+EndGlobal
