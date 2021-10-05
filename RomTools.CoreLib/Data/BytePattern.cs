@@ -8,13 +8,13 @@ using System.Text;
 namespace RomTools.Data
 {
 
-  public readonly struct ByteSignature : IEquatable<ByteSignature>
+  public readonly struct BytePattern : IEquatable<BytePattern>
   {
 
     #region Data Members
 
-    public readonly ByteSignatureType Type;
-    public readonly ByteSignature.Byte[] Pattern;
+    public readonly BytePatternType Type;
+    public readonly BytePattern.Byte[] Pattern;
     public readonly string PatternText;
     public readonly string Description;
 
@@ -34,7 +34,7 @@ namespace RomTools.Data
 
     #region Constructor
 
-    private ByteSignature( ByteSignatureType type, string pattern, string description = null )
+    private BytePattern( BytePatternType type, string pattern, string description = null )
     {
       pattern = SanitizePattern( pattern );
 
@@ -46,8 +46,8 @@ namespace RomTools.Data
       _md5Hash = ComputeHash( pattern );
     }
 
-    public static ByteSignature Define( ByteSignatureType type, string pattern, string description = null )
-      => new ByteSignature( type, pattern, description );
+    public static BytePattern Define( BytePatternType type, string pattern, string description = null )
+      => new BytePattern( type, pattern, description );
 
     #endregion
 
@@ -77,13 +77,13 @@ namespace RomTools.Data
     }
 
     [MethodImpl( MethodImplOptions.AggressiveInlining )]
-    private static ByteSignature.Byte[] ParsePattern( string pattern )
+    private static BytePattern.Byte[] ParsePattern( string pattern )
     {
       // Sanitize
       var span = pattern.AsSpan();
 
       var len = pattern.Length;
-      var bytes = new List<ByteSignature.Byte>( len / 2 );
+      var bytes = new List<BytePattern.Byte>( len / 2 );
 
       for ( var i = 0; i < len; i += 2 )
       {
@@ -97,7 +97,7 @@ namespace RomTools.Data
     }
 
     [MethodImpl( MethodImplOptions.AggressiveInlining )]
-    private static ByteSignature.Nibble ParseNibble( char c )
+    private static BytePattern.Nibble ParseNibble( char c )
     {
       if ( c == '?' )
         return Nibble.Masked;
@@ -131,14 +131,14 @@ namespace RomTools.Data
     }
 
     private static void ThrowInvalidPatternTokenException( char token )
-      => throw new Exception( $"Invalid token encountered when parsing signature: '{token}'" ); // TODO: Make this an actual exception type
+      => throw new Exception( $"Invalid token encountered when parsing pattern: '{token}'" ); // TODO: Make this an actual exception type
 
     #endregion
 
     #region IEquatable Methods
 
     [MethodImpl( MethodImplOptions.AggressiveInlining )]
-    public bool Equals( ByteSignature other )
+    public bool Equals( BytePattern other )
       =>  _md5Hash == other._md5Hash 
       && PatternText.Equals( other.PatternText, StringComparison.InvariantCultureIgnoreCase );
 
@@ -148,7 +148,7 @@ namespace RomTools.Data
 
     [MethodImpl( MethodImplOptions.AggressiveInlining )]
     public override bool Equals( object obj )
-      => obj is ByteSignature other && Equals( other );
+      => obj is BytePattern other && Equals( other );
 
     public override int GetHashCode()
       => _md5Hash.GetHashCode();

@@ -34,11 +34,11 @@ namespace RomTools.Plugins
 
     #region Private Methods
 
-    protected void RegisterByteSignature( ByteSignature byteSignature )
+    protected void RegisterBytePattern( BytePattern bytePattern )
     {
     }
 
-    protected void RegisterVfsDevice<T>( params ByteSignature[] applicableByteSignatures )
+    protected void RegisterVfsDevice<T>( params BytePattern[] applicableBytePatterns )
       where T : VfsDevice
     {
     }

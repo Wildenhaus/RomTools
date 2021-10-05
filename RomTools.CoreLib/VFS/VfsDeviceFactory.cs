@@ -13,7 +13,7 @@ namespace RomTools.VFS
 
     #region Data Members
 
-    private static readonly Dictionary<ByteSignature, HashSet<Type>> _vfsDeviceTypeRegistry;
+    private static readonly Dictionary<BytePattern, HashSet<Type>> _vfsDeviceTypeRegistry;
 
     #endregion
 
@@ -21,17 +21,17 @@ namespace RomTools.VFS
 
     static VfsDeviceFactory()
     {
-      _vfsDeviceTypeRegistry = new Dictionary<ByteSignature, HashSet<Type>>();
+      _vfsDeviceTypeRegistry = new Dictionary<BytePattern, HashSet<Type>>();
     }
 
     #endregion
 
     #region Public Methods
 
-    public static async Task<Result<VfsDevice>> CreateVfsDevice( Stream fileStream, ByteSignature byteSignature )
+    public static async Task<Result<VfsDevice>> CreateVfsDevice( Stream fileStream, BytePattern bytePattern )
     {
-      if ( !_vfsDeviceTypeRegistry.TryGetValue( byteSignature, out var deviceTypes ) )
-        return Result.Failure<VfsDevice>( $"Could not find a VfsDevice for byte signature [{byteSignature.PatternText}]." );
+      if ( !_vfsDeviceTypeRegistry.TryGetValue( bytePattern, out var deviceTypes ) )
+        return Result.Failure<VfsDevice>( $"Could not find a VfsDevice for byte pattern [{bytePattern.PatternText}]." );
 
       foreach( var deviceType in deviceTypes )
       {
@@ -44,29 +44,29 @@ namespace RomTools.VFS
       return Result.Failure<VfsDevice>( "Failed to createa a device." );
     }
 
-    public static Result RegisterDevice<TDevice>( params ByteSignature[] byteSignatures )
+    public static Result RegisterDevice<TDevice>( params BytePattern[] bytePatterns )
       where TDevice : VfsDevice
-      => RegisterDevice( typeof( TDevice ), byteSignatures );
+      => RegisterDevice( typeof( TDevice ), bytePatterns );
 
-    public static Result RegisterDevice( Type deviceType, params ByteSignature[] byteSignatures )
+    public static Result RegisterDevice( Type deviceType, params BytePattern[] bytePatterns )
     {
       if( !typeof( VfsDevice ).IsAssignableFrom( deviceType ) )
         return Result.Failure( $"Type `{deviceType.FullName}` is not derived from VfsDevice and cannot be registered." );
       if ( deviceType.IsAbstract )
         return Result.Failure( $"VFS Device Type `{deviceType.FullName}` is abstract and cannot be registered." );
 
-      foreach( var byteSignature in byteSignatures )
+      foreach( var bytePattern in bytePatterns )
       {
-        if(!_vfsDeviceTypeRegistry.TryGetValue( byteSignature, out var registeredDevices ) )
+        if(!_vfsDeviceTypeRegistry.TryGetValue( bytePattern, out var registeredDevices ) )
         {
           registeredDevices = new HashSet<Type>();
-          _vfsDeviceTypeRegistry.Add( byteSignature, registeredDevices );
+          _vfsDeviceTypeRegistry.Add( bytePattern, registeredDevices );
         }
 
         registeredDevices.Add( deviceType );
       }
 
-      return Result.Successful( $"Registered VFS Device `{deviceType.Name}` to {byteSignatures.Length} byte signatures." );
+      return Result.Successful( $"Registered VFS Device `{deviceType.Name}` to {bytePatterns.Length} byte patterns." );
     }
 
     #endregion

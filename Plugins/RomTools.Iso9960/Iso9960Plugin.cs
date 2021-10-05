@@ -20,8 +20,8 @@ namespace RomTools.Iso9960
 
     protected override void OnInitializing()
     {
-      RegisterByteSignature( ByteSignatureDefinitions.Iso9960Magic );
-      RegisterVfsDevice<Iso9960Device>( ByteSignatureDefinitions.Iso9960Magic );
+      RegisterBytePattern( BytePatternDefinitions.Iso9960Magic );
+      RegisterVfsDevice<Iso9960Device>( BytePatternDefinitions.Iso9960Magic );
     }
 
     #endregion
